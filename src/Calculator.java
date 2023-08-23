@@ -1,11 +1,11 @@
 import java.util.Scanner;
 
-public class Main {
+public class Calculator {
 
     private static boolean _romanResult = false;
 
 
-    private Main(){
+    private Calculator(){
         Scanner in = new Scanner(System.in);
         System.out.println("Введите данные: ");
 
@@ -18,8 +18,8 @@ public class Main {
         final int romanFirstNumber;
         final int romanSecondNumber;
         final int result;
-        int firstNumber = 0;
-        int secondNumber = 0;
+        int firstNumber;
+        int secondNumber;
 
 
         final String[] inputData = input.split(" ");
@@ -32,11 +32,18 @@ public class Main {
         romanFirstNumber = convertRomanNumber(inputData[0]);
         romanSecondNumber = convertRomanNumber(inputData[2]);
 
-
         if(romanFirstNumber == -1 && romanSecondNumber == -1){
             try {
                 firstNumber = Integer.parseInt(inputData[0]);
                 secondNumber = Integer.parseInt(inputData[2]);
+
+                if(firstNumber > 10){
+                    return "Первое число больше 10";
+                }
+
+                if(secondNumber > 10){
+                    return "Второе число больше 10";
+                }
             }
             catch (NumberFormatException e){
                 return "Число не должно превышать X";
@@ -56,14 +63,6 @@ public class Main {
 
         if(operator.contains("/") && secondNumber == 0){
             return "Деление на 0 :С";
-        }
-
-        if(!_romanResult && firstNumber > 10){
-            return "Первое число больше 10";
-        }
-
-        if(!_romanResult && secondNumber > 10){
-            return "Второе число больше 10";
         }
 
         switch (operator) {
@@ -87,33 +86,23 @@ public class Main {
 
     private static int convertRomanNumber (String roman) {
 
-        if (roman.equals("I")) {
-                return 1;
-            } else if (roman.equals("II")) {
-                return 2;
-            } else if (roman.equals("III")) {
-                return 3;
-            } else if (roman.equals("IV")) {
-                return 4;
-            } else if (roman.equals("V")) {
-                return 5;
-            } else if (roman.equals("VI")) {
-                return 6;
-            } else if (roman.equals("VII")) {
-                return 7;
-            } else if (roman.equals("VIII")) {
-                return 8;
-            } else if (roman.equals("IX")) {
-                return 9;
-            } else if (roman.equals("X")) {
-            return 10;
-        }
-        return -1;
+        return switch (roman) {
+            case "I" -> 1;
+            case "II" -> 2;
+            case "III" -> 3;
+            case "IV" -> 4;
+            case "V" -> 5;
+            case "VI" -> 6;
+            case "VII" -> 7;
+            case "VIII" -> 8;
+            case "IX" -> 9;
+            case "X" -> 10;
+            default -> -1;
+        };
     }
-
 
     public static void main(String[] args)
     {
-        new Main();
+        new Calculator();
     }
 }
